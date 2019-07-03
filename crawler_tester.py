@@ -33,7 +33,7 @@ def main(param):
         for a in source.articles:
             if param.download:
                 try:
-                    article = Article(a.url, fetch_images=param.image)
+                    article = Article(a.url.strip(), fetch_images=param.image)
                     article.download()
                     article.parse()
                     writer.writerow([article.title, article.url])
@@ -44,7 +44,7 @@ def main(param):
                         logger.exception("Exception when processing URL {}".format(article.url))
                     skip_count += 1
             else:
-                f.write(a.url + "\n")
+                f.write(a.url.strip() + "\n")
                 download_count += 1
 
     logger.info("Finish processing download list")
