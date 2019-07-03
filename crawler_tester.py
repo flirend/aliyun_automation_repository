@@ -48,6 +48,9 @@ def main(param):
                 download_count += 1
 
     logger.info("Finish processing download list")
+    logger.info("{0} page(s) downloaded, {1} page(s) skipped, total page number: {2}".format(download_count, skip_count,
+                                                                                             download_count+skip_count))
+    param.infile.close()
 
 def parse_arg():
     parser = argparse.ArgumentParser(description='Use newspaper lib to crawl URL(s)')
