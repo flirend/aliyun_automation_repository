@@ -50,7 +50,7 @@ def main(param):
     logger.info("Finish processing download list")
     logger.info("{0} page(s) downloaded, {1} page(s) skipped, total page number: {2}".format(download_count, skip_count,
                                                                                              download_count+skip_count))
-    param.infile.close()
+
 
 def parse_arg():
     parser = argparse.ArgumentParser(description='Use newspaper lib to crawl URL(s)')
@@ -70,7 +70,6 @@ def parse_arg():
 
 if __name__ == "__main__":
     args = parse_arg()
-    print(args)
     logger = logging.getLogger("logger")
     handler = logging.StreamHandler(args.log_file)
     formatter = logging.Formatter("%(asctime)s %(name)s %(levelname)s %(message)s")
@@ -82,5 +81,6 @@ if __name__ == "__main__":
         logger.setLevel(logging.WARN)
 
     logger.addHandler(handler)
-    # exit()
+
+    logger.info(args)
     main(args)
