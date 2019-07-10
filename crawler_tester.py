@@ -10,9 +10,11 @@ import argparse
 import sys
 import time
 import random
+import datetime as dt
 
 
 def main(param):
+    start_time = dt.datetime.now()
     logger.info("Start to process Source: {}".format(param.URL))
     source = Source(param.URL, memoize_articles=param.remember, number_threads=param.threads)
     source.download()
@@ -23,7 +25,9 @@ def main(param):
     source.set_feeds()
     source.download_feeds()
     source.generate_articles(limit=param.limit)
-    logger.info("Total article number: {}".format(source.size()))
+    end_time = dt.datetime.now()
+    duration = end_time - start_time
+    logger.info("Took {} seconds, total article number: {}".format(duration.seconds, source.size()))
 
     skip_count: int = 0
     download_count: int = 0
@@ -44,7 +48,7 @@ def main(param):
                         logger.exception("Exception when processing URL {}".format(article.url))
                     skip_count += 1
             else:
-                f.write(a.url.strip() + "\n")
+                writer.writerow(a.url.strip())
                 download_count += 1
 
     logger.info("Finish processing download list")
